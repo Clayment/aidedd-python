@@ -7,9 +7,13 @@ class App:
     sUrlBase = "http://www.aidedd.org/"
     sUrlSpellBooks = "adj/livre-sorts/?n=19&c="
     sUrlSpell = "dnd/sorts.php?vf="
+    sPathToSave = "./exports"
     setClasses = set()
 
     def run(self):
+        if not os.path.exists(self.sPathToSave):
+            os.makedirs(self.sPathToSave)
+        
         sHtmlContent = urlopen(self.sUrlBase + self.sUrlSpellBooks + 'c').read().decode()
         soup = BeautifulSoup(sHtmlContent,'html.parser')
         setOptions = soup.find(id='Form_Form_classe').find_all('option')
