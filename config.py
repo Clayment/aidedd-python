@@ -2,6 +2,7 @@ from bs4 import BeautifulSoup
 from urllib.request import urlopen
 from charClass import CharClass
 from spellList import SpellList
+import os
 
 class App:
     sUrlBase = "http://www.aidedd.org/"
@@ -22,5 +23,7 @@ class App:
             self.setClasses.add(CharClass(o['value'], o.text))
 
         for classe in self.setClasses:
+            print('Parsing spell list of : ' + classe.name + '...')
             classe.spellList.parseList()
+            
 

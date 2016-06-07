@@ -3,6 +3,8 @@ import config
 from bs4 import BeautifulSoup
 from spell import Spell
 import re
+import os
+import sys
 
 class SpellList:
     def __init__(self, id, path):
@@ -23,12 +25,16 @@ class SpellList:
             if matches:
                 lvl = matches.group(1)
                 name = matches.group(2).strip()
-                slug = s['value'].strip()
+                slug = s['value'].strip().replace('\'', '')
                 spell = Spell(slug, lvl, self.sPath)
                 self.list.add(spell)
         
         for spell in self.list:
-            spell.parseSpell()
+            try:
+                spell.parseSpell()
+            except:
+                print('parseSpell Error: the spell '+ spell.slug +' parsing raised an Error : ', sys.exc_info()[0])
 
-        for spell in self.list:
-            print(spell)
+
+        #for spell in self.list:
+        #    print(spell)
